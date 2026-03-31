@@ -1,0 +1,13 @@
+out/
+node_modules/
+*.vsix
+.vscode-test/
+*.tgz
+.DS_Store
+
+# Demo media — raw recordings and intermediate MP4s are large; don't track them.
+# Only final GIFs (small, used in README) are committed.
+media/raw/*
+!media/raw/.gitkeep
+media/mp4/*
+!media/mp4/.gitkeep

@@ -1,0 +1,114 @@
+{
+    "name": "vscode-browser-layout",
+    "displayName": "Browser Layout",
+    "description": "Open browser tabs beside your code editor via a status bar button.",
+    "version": "0.1.0",
+    "publisher": "dcampman",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/dcampman/vscode-browser-layout.git"
+    },
+    "engines": {
+        "vscode": "^1.85.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onStartupFinished"
+    ],
+    "main": "./out/extension.js",
+    "icon": "media/images/icon.png",
+    "contributes": {
+        "commands": [
+            {
+                "command": "browserLayout.open",
+                "title": "Browser Layout: Open URL",
+                "icon": "$(globe)"
+            }
+        ],
+        "menus": {
+            "editor/title": [
+                {
+                    "command": "browserLayout.open",
+                    "group": "navigation"
+                }
+            ]
+        },
+        "configuration": {
+            "title": "Browser Layout",
+            "properties": {
+                "browserLayout.position": {
+                    "type": "string",
+                    "default": "active",
+                    "enum": [
+                        "active",
+                        "right",
+                        "left"
+                    ],
+                    "enumDescriptions": [
+                        "Open in the currently focused editor group (no layout management).",
+                        "Open in the right editor group. Creates a two-group layout if needed and returns focus to the left group.",
+                        "Open in the left editor group. Creates a two-group layout if needed and returns focus to the right group."
+                    ],
+                    "order": 1,
+                    "markdownDescription": "Where the Simple Browser tab opens.\n\n- **active** — opens in whichever editor group is focused (default).\n- **right** — ensures two editor groups and places the browser on the right, keeping your code on the left.\n- **left** — ensures two editor groups and places the browser on the left, keeping your code on the right."
+                },
+                "browserLayout.defaultUrl": {
+                    "type": "string",
+                    "default": "",
+                    "order": 2,
+                    "markdownDescription": "A URL to open immediately when clicking the status bar button, **skipping the quick pick menu**. Leave empty to always show the quick pick.\n\nMust start with `http://` or `https://`.\n\n**Example:** `http://localhost:3000`"
+                },
+                "browserLayout.openOnStartup": {
+                    "type": "boolean",
+                    "default": false,
+                    "order": 3,
+                    "markdownDescription": "Automatically open a browser tab when the workspace loads. Uses `#browserLayout.defaultUrl#` as the URL. Has no effect if `defaultUrl` is empty."
+                },
+                "browserLayout.statusBar.label": {
+                    "type": "string",
+                    "default": "$(globe) Browser",
+                    "order": 4,
+                    "markdownDescription": "Text shown in the status bar button. Supports [codicons](https://microsoft.github.io/vscode-codicons/dist/codicon.html) like `$(globe)`, `$(browser)`, `$(link-external)`.\n\n**Examples:**\n- `$(globe) Browser` — icon + text (default)\n- `$(globe)` — icon only\n- `$(browser) Dev` — different icon + custom text\n- *(empty)* — hides the status bar button entirely"
+                },
+                "browserLayout.urls": {
+                    "type": "object",
+                    "default": {},
+                    "order": 5,
+                    "markdownDescription": "Preset URLs shown in the quick pick menu. The **Key** is the display label; the **Value** is the URL to open (must start with `http://` or `https://`).\n\n**Example:**\n```json\n{\n  \"Local Dev\": \"http://localhost:3000\",\n  \"Staging\": \"https://staging.example.com\"\n}\n```",
+                    "additionalProperties": {
+                        "type": "string",
+                        "markdownDescription": "URL to open. Must start with `http://` or `https://`."
+                    }
+                },
+                "browserLayout.updateCheck.enabled": {
+                    "type": "boolean",
+                    "default": true,
+                    "order": 6,
+                    "markdownDescription": "Check [GitHub Releases](https://github.com/dcampman/vscode-browser-layout/releases) for new versions when VS Code starts. At most one check per `#browserLayout.updateCheck.intervalHours#`. You will always be asked before anything is installed."
+                },
+                "browserLayout.updateCheck.intervalHours": {
+                    "type": "number",
+                    "default": 24,
+                    "minimum": 1,
+                    "order": 7,
+                    "markdownDescription": "Minimum number of hours between update checks. Requires `#browserLayout.updateCheck.enabled#` to be `true`. Default is `24` (once per day)."
+                }
+            }
+        }
+    },
+    "scripts": {
+        "compile": "tsc -p .",
+        "watch": "tsc -watch -p .",
+        "package": "vsce package",
+        "demo-media": "bash scripts/generate-demo-media.sh"
+    },
+    "devDependencies": {
+        "@types/node": "^20.19.37",
+        "@types/vscode": "^1.85.0",
+        "@vscode/vsce": "^3.2.0",
+        "typescript": "^5.3.0"
+    }
+}

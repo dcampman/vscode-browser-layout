@@ -1,0 +1,10 @@
+.github/
+.vscode/
+node_modules/
+src/
+scripts/
+tsconfig.json
+.gitignore
+*.vsix
+media/raw/
+media/mp4/
